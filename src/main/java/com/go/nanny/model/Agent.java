@@ -1,4 +1,4 @@
-package com.go.nanny.agent;
+package com.go.nanny.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

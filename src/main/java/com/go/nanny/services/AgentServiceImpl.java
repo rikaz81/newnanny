@@ -1,4 +1,4 @@
-package com.go.nanny.agent;
+package com.go.nanny.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.go.nanny.model.Agent;
+import com.go.nanny.repository.CourseRepository;
+
 @Service
-public class AgentService {
+public class AgentServiceImpl implements AgentService {
 
 	@Autowired
 	private CourseRepository courseRepository;
@@ -26,16 +29,20 @@ public class AgentService {
 		return topics;
 	}
 
-	public Agent getCourse(String topic) {
+	public Agent findAgentByAgentName(String agentName) {
+		return courseRepository.findAgentByAgentName(agentName);
+	}
+
+	public Agent getAgentById(String topic) {
 		return courseRepository.findOne(topic);
 
 	}
 
-	public void addAgent(Agent topic) {
-		courseRepository.save(topic);
+	public Agent addAgent(Agent topic) {
+		return courseRepository.save(topic);
 	}
 
-	public void updateCourse(String id, Agent newTopic) {
+	public void updateAgent(String id, Agent newTopic) {
 
 		courseRepository.save(newTopic);
 	}
@@ -43,6 +50,11 @@ public class AgentService {
 	public void deleteCourse(String topicId) {
 		courseRepository.delete(topicId);
 
+	}
+
+	@Override
+	public boolean exists(Agent user) {
+		return findAgentByAgentName(user.getAgentName()) != null;
 	}
 
 }
